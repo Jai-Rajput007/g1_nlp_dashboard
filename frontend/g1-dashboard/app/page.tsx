@@ -1,150 +1,78 @@
 import Link from "next/link";
 
-export default function Dashboard() {
+export default function Home() {
   return (
-    <div className="flex-1 p-6 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-semibold text-foreground mb-6">
-          RAG Dashboard
-        </h1>
+    <div className="flex-1 flex flex-col">
+      {/* Hero Section */}
+      <section className="flex-1 flex flex-col items-center justify-center px-4 py-20 text-center">
+        <div className="max-w-4xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent border border-border mb-8">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-sm text-accent-foreground font-medium">AI-Powered Document Intelligence</span>
+          </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-card border border-border rounded-lg p-4">
-            <p className="text-muted-foreground text-sm">Total Documents</p>
-            <p className="text-2xl font-bold text-card-foreground mt-1">0</p>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-4">
-            <p className="text-muted-foreground text-sm">Indexed Chunks</p>
-            <p className="text-2xl font-bold text-card-foreground mt-1">0</p>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-4">
-            <p className="text-muted-foreground text-sm">Active Models</p>
-            <p className="text-2xl font-bold text-card-foreground mt-1">0</p>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-4">
-            <p className="text-muted-foreground text-sm">Queries Today</p>
-            <p className="text-2xl font-bold text-card-foreground mt-1">0</p>
+          {/* Heading */}
+          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tight">
+            <span className="text-primary">G1</span> RAG System
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+            Transform your documents into intelligent conversations. 
+            Upload, index, and chat with your knowledge base using advanced AI.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/dashboard"
+              className="group px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
+            >
+              Get Started
+              <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <Link
+              href="/chat"
+              className="px-8 py-4 bg-card border border-border text-card-foreground rounded-xl font-semibold text-lg hover:bg-accent transition-all"
+            >
+              Try Demo
+            </Link>
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Link
-            href="/documents"
-            className="group bg-card border border-border rounded-lg p-6 hover:border-primary transition-colors"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-accent-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-card-foreground">Documents</h3>
+        {/* Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-5xl mx-auto w-full px-4">
+          <div className="bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
             </div>
-            <p className="text-muted-foreground text-sm">
-              Manage uploaded documents, view metadata, and re-index content.
-            </p>
-          </Link>
+            <h3 className="text-lg font-semibold text-card-foreground mb-2">Smart Upload</h3>
+            <p className="text-muted-foreground text-sm">Drag and drop any document. Auto-extract, chunk, and index instantly.</p>
+          </div>
 
-          <Link
-            href="/chat"
-            className="group bg-card border border-border rounded-lg p-6 hover:border-primary transition-colors"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-accent-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                  />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-card-foreground">Chat</h3>
+          <div className="bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
             </div>
-            <p className="text-muted-foreground text-sm">
-              Ask questions and get answers based on your document knowledge base.
-            </p>
-          </Link>
+            <h3 className="text-lg font-semibold text-card-foreground mb-2">AI Chat</h3>
+            <p className="text-muted-foreground text-sm">Ask questions in natural language. Get answers with source citations.</p>
+          </div>
 
-          <Link
-            href="/upload"
-            className="group bg-card border border-border rounded-lg p-6 hover:border-primary transition-colors"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-accent-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-card-foreground">Upload</h3>
+          <div className="bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all hover:-translate-y-1">
+            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4">
+              <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
             </div>
-            <p className="text-muted-foreground text-sm">
-              Upload new documents to feed into the RAG knowledge base.
-            </p>
-          </Link>
-
-          <Link
-            href="/settings"
-            className="group bg-card border border-border rounded-lg p-6 hover:border-primary transition-colors"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-md bg-accent flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-accent-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-card-foreground">Settings</h3>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              Configure LLM models, embedding models, and system preferences.
-            </p>
-          </Link>
+            <h3 className="text-lg font-semibold text-card-foreground mb-2">Lightning Fast</h3>
+            <p className="text-muted-foreground text-sm">Local vector database. No cloud lag. Privacy-first architecture.</p>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
