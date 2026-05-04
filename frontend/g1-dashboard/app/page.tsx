@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { ExpandingCards, robotFeatures } from "./components/ui/expanding-cards";
 
 export default function Home() {
   return (
@@ -71,6 +74,43 @@ export default function Home() {
             <h3 className="text-lg font-semibold text-card-foreground mb-2">Lightning Fast</h3>
             <p className="text-muted-foreground text-sm">Local vector database. No cloud lag. Privacy-first architecture.</p>
           </div>
+        </div>
+      </section>
+
+      {/* Robot Features - Expanding Cards Section */}
+      <section className="px-4 py-20 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Powerful Features
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Explore the cutting-edge capabilities that make our RAG system stand out. 
+              Hover over each card to discover more.
+            </p>
+          </div>
+          <ExpandingCards items={robotFeatures} defaultActiveIndex={0} />
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="px-4 py-20 bg-accent/30 border-y border-border">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Ready to Transform Your Documents?
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Start building your AI-powered knowledge base today. Upload documents, ask questions, and get intelligent answers.
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-lg hover:opacity-90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
+          >
+            Get Started Free
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
         </div>
       </section>
     </div>
