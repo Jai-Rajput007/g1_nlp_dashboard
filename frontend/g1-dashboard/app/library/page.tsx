@@ -19,15 +19,6 @@ interface Document {
   error?: string;
 }
 
-const mockDocuments: Document[] = [
-  { id: "1", name: "Project_Requirements.pdf", size: "2.4 MB", type: "PDF", status: "indexed", uploadedAt: "2 hours ago", chunks: 156 },
-  { id: "2", name: "Research_Paper.docx", size: "1.1 MB", type: "DOCX", status: "indexed", uploadedAt: "5 hours ago", chunks: 89 },
-  { id: "3", name: "Meeting_Notes.txt", size: "12 KB", type: "TXT", status: "indexed", uploadedAt: "1 day ago", chunks: 3 },
-  { id: "4", name: "Technical_Specs.md", size: "45 KB", type: "MD", status: "processing", uploadedAt: "2 days ago" },
-  { id: "5", name: "API_Documentation.pdf", size: "856 KB", type: "PDF", status: "indexed", uploadedAt: "3 days ago", chunks: 45 },
-  { id: "6", name: "User_Manual.docx", size: "3.2 MB", type: "DOCX", status: "error", uploadedAt: "3 days ago", error: "Failed to extract text" },
-];
-
 const fileTypeIcons: Record<string, string> = {
   PDF: "M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z",
   DOCX: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
@@ -36,7 +27,7 @@ const fileTypeIcons: Record<string, string> = {
 };
 
 export default function Library() {
-  const [documents, setDocuments] = useState<Document[]>(mockDocuments);
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [isDragging, setIsDragging] = useState(false);

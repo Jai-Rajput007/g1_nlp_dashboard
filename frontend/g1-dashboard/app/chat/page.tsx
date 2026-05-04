@@ -23,29 +23,6 @@ interface Message {
   timestamp: Date;
 }
 
-const mockSources: Source[] = [
-  {
-    id: "1",
-    document: "Project_Requirements.pdf",
-    page: 12,
-    excerpt: "The system must support real-time document processing with chunk sizes between 512-2048 tokens...",
-    score: 0.94,
-  },
-  {
-    id: "2",
-    document: "Technical_Specs.md",
-    excerpt: "Vector database uses cosine similarity for matching with a threshold of 0.7...",
-    score: 0.89,
-  },
-  {
-    id: "3",
-    document: "API_Documentation.pdf",
-    page: 45,
-    excerpt: "RAG pipeline combines retrieval and generation phases for accurate responses...",
-    score: 0.85,
-  },
-];
-
 const suggestedPrompts = [
   "Summarize my documents",
   "What are the key insights?",
@@ -85,20 +62,20 @@ export default function Chat() {
     setInput("");
     setIsLoading(true);
 
-    // Simulate streaming response
+    // TODO: Connect to backend API for RAG response
     const assistantId = (Date.now() + 1).toString();
     const assistantMessage: Message = {
       id: assistantId,
       role: "assistant",
       content: "",
-      sources: mockSources,
       isStreaming: true,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, assistantMessage]);
 
-    const response = "Based on your documents, I can explain that this RAG (Retrieval-Augmented Generation) system works by first indexing your documents into chunks, then using vector similarity search to find relevant context, and finally generating responses using a local LLM. The system supports multiple document formats and uses semantic chunking to preserve context across document boundaries.";
+    // Simulate streaming until backend is ready
+    const response = "This is a placeholder response. Backend integration needed for actual RAG responses with document sources.";
     
     let currentContent = "";
     for (let i = 0; i < response.length; i += 3) {
