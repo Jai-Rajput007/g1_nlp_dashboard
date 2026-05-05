@@ -60,41 +60,158 @@ Offline RAG document management system for robot with 128GB Thor AGX. Hybrid arc
     - [X] XML documents
     - [X] Wrapper converts LangChain output to our `DocumentContent` format with structure detection
 - [X] **2.4** Structure-aware chunking:
-  - [X] Semantic chunking (paragraph-aware)
-  - [X] Fixed-size chunking with overlap
-  - [X] Recursive chunking (tries multiple separators)
-  - [X] Configurable chunk size and overlap
-- [ ] **2.5** Embedding generation (batch + CPU optimized)
-- [X] **2.6** Vector storage with ChromaDB (ready for pgvector)
+  - [X] **Recursive + Heading/Section based chunking**: Respects document hierarchy
+  - [X] **Streaming processing**: Real-time progress updates during chunking
+  - [X] **Hierarchy metadata preservation**: Section path, headings hierarchy, parent-child relationships
+  - [X] **Complex structure preservation**:
+    - Tables: Preserved as units or split by rows with headers
+    - Lists: Kept intact as logical groups
+    - Code blocks: Split at logical boundaries (comments, blank lines)
+    - Headings: Always included as context in overlapping chunks
+  - [X] **Rich metadata extraction per chunk**:
+    - Source info: filename, file_type
+    - Document metadata: title, author, created/modified dates
+    - Position: chunk_index, total_chunks, page_number
+    - Hierarchy: section_level, section_path, headings_hierarchy, parent_section
+    - Content types: contains_table/list/code/image flags
+    - Stats: char_count, word_count, sentence_count, token_estimate
+    - Tags and keywords extracted from content
+  - [X] Configurable size and overlap with boundary respect
+- [X] **2.5** Embedding generation (batch + CPU optimized):
+  - [X] **Batch processing**: Configurable batch size with controlled concurrency
+  - [X] **CPU optimization**: Worker threads based on CPU count, smaller batches for local inference
+  - [X] **Async with progress tracking**: Real-time progress callbacks during embedding generation
+  - [X] **Retry logic**: Automatic retries with exponential backoff for failed requests
+  - [X] **Streaming support**: `embed_documents_streaming()` for yield-as-completed
+  - [X] **Multi-provider support**: Ollama (optimized for local), OpenAI (native batching)
+  - [X] **Stats and monitoring**: Provider info, batch sizes, concurrency levels exposed
+- [X] **2.6** Vector storage with pgvector (PostgreSQL native):
+  - [X] **pgvector extension**: Uses PostgreSQL's vector extension for storage
+  - [X] **Cosine similarity search**: Efficient vector search with metadata filtering
+  - [X] **Fallback mode**: In-memory storage when PostgreSQL unavailable (development)
+  - [X] **Unified storage**: Vectors stored alongside metadata in PostgreSQL
 - [X] **2.7** Ingestion pipeline with progress tracking:
-  - [ ] 5-stage pipeline: Upload → Extract → Chunk → Embed → Index
+  - [X] 5-stage pipeline: Upload → Extract → Chunk → Embed → Index
   - [X] Real-time progress updates with callbacks
   - [X] Activity logging for all operations
   - [X] Error handling with detailed messages
 
-### Phase 3: Retrieval & Query
+### Phase 3: Retrieval & Query (Complete with Hierarchy)
 
-- [ ] **3.1** Query processing (user question + metadata filters)
-- [ ] **3.2** Hybrid retrieval (vector + metadata filtering + hierarchy)
-- [ ] **3.3** Context builder (top-k chunks + source metadata + page/section info)
-- [ ] **3.4** LLM integration with Ollama streaming
-- [ ] **3.5** Response formatting with citations
+- [X] **3.1** Query processing (user question understanding + metadata filter extraction)
+  - [X] **Query intent detection**: Classify queries as factual, definition, comparison, procedure, summary, search, locate, temporal
+  - [X] **Keyword extraction**: Extract important keywords from queries
+  - [X] **Filter extraction**: Automatically extract filters from query text
+    - [X] Document references: "in document X", "from file Y"
+    - [X] Section references: "in section X", "chapter Y"
+    - [X] Content type detection: "table", "list", "code", "heading"
+    - [X] Page references: "on page 5"
+  - [X] **Query expansion**: Generate query variations for better retrieval
+  - [X] **Confidence scoring**: Confidence level for each extraction
+  - [X] Document ID filtering (search specific documents)
+  - [X] Metadata filter support (arbitrary key-value filters)
+- [X] **3.2** Hybrid retrieval (vector + metadata filtering + hierarchy)
+  - [X] Vector similarity search with cosine distance
+  - [X] **Prefiltering** - Metadata filters applied BEFORE vector search (SQL WHERE)
+  - [X] **Postfiltering** - Complex filters applied after search (operators: NE, GT, GTE, LT, LTE, IN, NIN, CONTAINS)
+  - [X] Multiple document ID filtering
+  - [X] Similarity threshold filtering
+  - [X] Content type filtering (table, list, code, heading)
+  - [X] Date range filtering
+- [X] **3.3** Hierarchy retrieval (section-based context)
+  - [X] **Section path filtering** - Search within specific sections
+  - [X] **Parent section filtering** - Search within parent context
+  - [X] **Heading level filtering** - Filter by section hierarchy depth
+  - [X] **Parent context inclusion** - Include parent section info in results
+  - [X] Headings hierarchy tracking (H1 > H2 > H3 paths)
+  - [X] Section path metadata in results
+  - [X] `retrieve_by_hierarchy()` method for section-aware search
+  - [X] `retrieve_with_parent_context()` for contextual results
+- [X] **3.4** Context builder (top-k chunks + source metadata + page/section info + hierarchy context)
+  - [X] **Multiple context strategies**:
+    - [X] **Hierarchy**: Group by document > section > parent-child relationships
+    - [X] **Relevance**: Sort by similarity score (highest first)
+    - [X] **Chronological**: Sort by page/position in document
+    - [X] **Compress**: Truncate long chunks to fit context window
+    - [X] **Standard**: Simple list format
+  - [X] **Source metadata inclusion**: filename, page, section, relevance score
+  - [X] **Hierarchy context**: section_path, headings_hierarchy, parent_section
+  - [X] **Context optimization**: Automatic truncation to fit LLM context window
+  - [X] **Token estimation**: Estimate token count for context budgeting
+  - [X] **Relevance levels**: High/medium/low based on similarity score
+  - [X] **Source deduplication**: Avoid duplicate content
+  - [X] **Formatted output**: Structured with separators and clear source labeling
+- [X] **3.5** LLM integration with Ollama streaming
+  - [X] Ollama API integration for chat completions
+  - [X] Streaming response support (Server-Sent Events)
+  - [X] Non-streaming (standard) response support
+  - [X] Model list endpoint (fetches from Ollama)
+  - [X] Hierarchy-aware system prompts
+- [X] **3.6** Response formatting with citations
+  - [X] Source citations in responses
+  - [X] Relevance scores for each source
+  - [X] Document metadata in sources (page, section, excerpt)
+  - [X] Section path in source citations
+- [X] **3.7** Frontend integration (Query Processing & Context Building)
+  - [X] **Query Processing Controls**:
+    - [X] "Auto-detect intent" toggle for enabling query processing
+    - [X] "Use extracted filters" toggle for auto-applying filters
+  - [X] **Context Strategy Selector**:
+    - [X] Hierarchy (group by document/section)
+    - [X] Relevance (sort by score)
+    - [X] Chronological (by page/position)
+    - [X] Compress (truncate long chunks)
+    - [X] Standard (simple list)
+  - [X] **Hierarchy Filters**:
+    - [X] Section path input in chat
+    - [X] Parent section input in chat
+    - [X] Content type filters (table, list, code, heading)
+    - [X] "Include parent context" toggle
+  - [X] API client updated with all query processing and context building parameters
 
-### Phase 4: UI/UX
+### Phase 4: UI/UX (Frontend-Backend Connected)
 
-- [ ] **4.1** Document upload interface with progress
-- [ ] **4.2** Document listing with filters (date, type, collection, tags)
-- [ ] **4.3** Document details view (preview, metadata, re-index, delete)
-- [ ] **4.4** Search interface (filename + content)
-- [ ] **4.5** Chat interface with streaming responses
-- [ ] **4.6** Model configuration panel (LLM + embedding selection)
+- [X] **4.1** Document upload interface with progress
+  - [X] File upload with drag-and-drop support
+  - [X] Progress tracking with polling for status
+  - [X] Real-time status updates (processing → indexed)
+- [X] **4.2** Document listing with filters (search, status)
+  - [X] Live document list from backend API
+  - [X] Search by filename
+  - [X] Filter by status (all, uploaded, processing, indexed, error)
+  - [X] Document statistics (total, indexed, processing, size)
+- [X] **4.3** Document details view (preview, metadata, re-index, delete)
+  - [X] Document content preview API
+  - [X] Delete document with API call
+  - [X] Re-index document with progress polling
+- [X] **4.4** Dashboard with real-time data
+  - [X] Stats cards connected to backend
+  - [X] Recent documents list
+  - [X] Recent activities feed
+  - [X] Model status display
+  - [X] Auto-refresh every 30 seconds
+- [X] **4.5** Chat interface with streaming responses
+  - [X] Connected to backend chat API
+  - [X] Message history with sources/citations
+  - [X] Model selection from available models
+  - [X] Streaming text display
+  - [X] Error handling
+- [X] **4.6** Model configuration panel (LLM + embedding settings)
+  - [X] Load settings from backend on mount
+  - [X] Save settings to backend
+  - [X] All configuration tabs: General, LLM, Embedding, Chunking, Vector DB, API Keys
+  - [X] Save status indicator (saving/saved/error)
+- [X] **4.7** API client for frontend-backend communication
+  - [X] Centralized API client (`lib/api.ts`)
+  - [X] All endpoints typed and ready
+  - [X] Error handling and response parsing
 
 ### Phase 5: Advanced Features
 
-- [ ] **5.1** OCR for scanned PDFs/images
-- [ ] **5.2** Multilingual support (Hindi/English)
-- [ ] **5.3** Incremental indexing
-- [ ] **5.4** Document re-processing/re-indexing
+- [X] **5.1** Document re-processing/re-indexing (via Library UI)
+- [ ] **5.2** OCR for scanned PDFs/images
+- [ ] **5.3** Multilingual support (Hindi/English)
+- [ ] **5.4** Incremental indexing
 - [ ] **5.5** Archive old documents
 - [ ] **5.6** Graph RAG extension hooks (future)
 
@@ -152,9 +269,23 @@ CREATE TABLE chunks (
 
 ## Current Status
 
-**Last Updated:** 2026-05-04
-**Current Phase:** Backend Infrastructure Complete, Document Loaders Implemented
-**Next Action:** Connect document API to ingestion pipeline
+**Last Updated:** 2026-05-05
+**Current Phase:** Frontend-Backend Integration Complete
+**Next Action:** Implement Retrieval & Query pipeline (Phase 3)
+
+### Completed
+
+- [X] Embedding generation optimized (batch + CPU)
+- [X] Frontend-Backend API integration
+- [X] Dashboard, Library, Chat, Settings pages connected
+- [X] Real-time document processing with polling
+
+### Ready for Linux Deployment
+
+- [X] Modular backend code (PostgreSQL-compatible)
+- [X] All models use SQLAlchemy (ORM-agnostic)
+- [X] Vector DB abstraction layer (ChromaDB now, pgvector ready)
+- [X] CPU-optimized embedding with configurable concurrency
 
 ---
 

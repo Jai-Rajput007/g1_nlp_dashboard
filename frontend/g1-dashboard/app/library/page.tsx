@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { api } from "@/lib/api";
 
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
@@ -34,7 +35,36 @@ export default function Library() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch documents on mount
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  const fetchDocuments = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.getDocuments();
+      if (res.data) {
+        const docs = (res.data as any[]).map((doc: any) => ({
+          id: String(doc.id),
+          name: doc.name || doc.filename || "Unknown",
+          size: doc.size || formatFileSize(doc.file_size || 0),
+          type: doc.file_type?.toUpperCase() || "UNKNOWN",
+          status: doc.status as DocumentStatus,
+          uploadedAt: doc.created_at || doc.uploadedAt || "-",
+          chunks: doc.chunks_count || 0,
+        }));
+        setDocuments(docs);
+      }
+    } catch (error) {
+      console.error("Failed to fetch documents:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredDocs = documents.filter((doc) => {
     const matchesSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -59,29 +89,36 @@ export default function Library() {
     handleFiles(files);
   }, []);
 
-  const handleFiles = (files: File[]) => {
+  const handleFiles = async (files: File[]) => {
     setShowUploadModal(true);
-    setUploadProgress(0);
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 10;
-      setUploadProgress(progress);
-      if (progress >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          setShowUploadModal(false);
-          const newDocs: Document[] = files.map((file, idx) => ({
-            id: `new-${Date.now()}-${idx}`,
-            name: file.name,
-            size: formatFileSize(file.size),
-            type: file.name.split(".").pop()?.toUpperCase() || "UNKNOWN",
-            status: "processing",
-            uploadedAt: "Just now",
-          }));
-          setDocuments((prev) => [...newDocs, ...prev]);
-        }, 500);
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setUploadProgress(((i + 1) / files.length) * 100);
+      
+      try {
+        const res = await api.uploadDocument(file);
+        if (res.error) {
+          console.error(`Failed to upload ${file.name}:`, res.error);
+        }
+      } catch (error) {
+        console.error(`Error uploading ${file.name}:`, error);
       }
-    }, 200);
+    }
+    
+    setShowUploadModal(false);
+    setUploadProgress(0);
+    
+    // Refresh document list
+    await fetchDocuments();
+    
+    // Poll for processing status
+    const pollInterval = setInterval(async () => {
+      await fetchDocuments();
+    }, 3000);
+    
+    // Stop polling after 2 minutes
+    setTimeout(() => clearInterval(pollInterval), 120000);
   };
 
   const formatFileSize = (bytes: number) => {
@@ -92,20 +129,59 @@ export default function Library() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
   };
 
-  const deleteDocument = (id: string) => {
-    setDocuments((prev) => prev.filter((doc) => doc.id !== id));
-    if (selectedDoc?.id === id) setSelectedDoc(null);
+  const deleteDocument = async (id: string) => {
+    try {
+      const res = await api.deleteDocument(parseInt(id));
+      if (!res.error) {
+        setDocuments((prev) => prev.filter((doc) => doc.id !== id));
+        if (selectedDoc?.id === id) setSelectedDoc(null);
+      } else {
+        console.error("Failed to delete document:", res.error);
+      }
+    } catch (error) {
+      console.error("Error deleting document:", error);
+    }
   };
 
-  const reindexDocument = (id: string) => {
+  const reindexDocument = async (id: string) => {
     setDocuments((prev) =>
       prev.map((doc) => (doc.id === id ? { ...doc, status: "processing" } : doc))
     );
-    setTimeout(() => {
+    
+    try {
+      const res = await api.reindexDocument(parseInt(id));
+      if (!res.error) {
+        // Poll for status updates
+        const pollInterval = setInterval(async () => {
+          const progressRes = await api.getDocumentProgress(parseInt(id));
+          if (progressRes.data) {
+            const data = progressRes.data as any;
+            if (data.stage === "completed") {
+              clearInterval(pollInterval);
+              await fetchDocuments();
+            } else if (data.stage === "failed") {
+              clearInterval(pollInterval);
+              setDocuments((prev) =>
+                prev.map((doc) => (doc.id === id ? { ...doc, status: "error", error: data.error } : doc))
+              );
+            }
+          }
+        }, 3000);
+        
+        // Stop polling after 5 minutes
+        setTimeout(() => clearInterval(pollInterval), 300000);
+      } else {
+        console.error("Failed to reindex document:", res.error);
+        setDocuments((prev) =>
+          prev.map((doc) => (doc.id === id ? { ...doc, status: "error" } : doc))
+        );
+      }
+    } catch (error) {
+      console.error("Error reindexing document:", error);
       setDocuments((prev) =>
-        prev.map((doc) => (doc.id === id ? { ...doc, status: "indexed", chunks: Math.floor(Math.random() * 200) + 50 } : doc))
+        prev.map((doc) => (doc.id === id ? { ...doc, status: "error" } : doc))
       );
-    }, 3000);
+    }
   };
 
   const totalSize = documents.reduce((acc, doc) => {

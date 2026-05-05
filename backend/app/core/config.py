@@ -24,8 +24,8 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./rag_system.db"
     
     # Vector Database
-    VECTOR_DB_TYPE: str = "chroma"  # chroma, qdrant, pinecone, weaviate
-    CHROMA_PERSIST_DIR: str = "./chroma_data"
+    VECTOR_DB_TYPE: str = "pgvector"  # pgvector (recommended), chroma, qdrant, pinecone, weaviate
+    # Note: pgvector stores vectors in PostgreSQL alongside your data - no separate persist dir needed
     
     # LLM Configuration
     LLM_PROVIDER: str = "ollama"  # ollama, openai, anthropic, cohere
@@ -44,7 +44,14 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int = 512
     CHUNK_OVERLAP: int = 50
     CHUNKING_STRATEGY: str = "semantic"
+    
+    # Embedding Configuration
     BATCH_SIZE: int = 32
+    EMBEDDING_BATCH_SIZE: int = 16  # Texts per batch for embedding
+    EMBEDDING_CONCURRENCY: int = 4   # Concurrent embedding requests
+    EMBEDDING_MAX_RETRIES: int = 3
+    EMBEDDING_RETRY_DELAY: float = 1.0  # seconds
+    EMBEDDING_CPU_OPTIMIZED: bool = True  # Use CPU-optimized settings
     
     # Retrieval Configuration
     TOP_K: int = 5
@@ -58,7 +65,10 @@ class Settings(BaseSettings):
     # File Upload
     UPLOAD_DIR: str = "./uploads"
     MAX_FILE_SIZE: int = 50 * 1024 * 1024  # 50MB
-    ALLOWED_EXTENSIONS: List[str] = [".pdf", ".docx", ".txt", ".md"]
+    ALLOWED_EXTENSIONS: List[str] = [
+        ".pdf", ".docx", ".txt", ".md", ".html", ".csv", ".json",
+        ".epub", ".pptx", ".odt", ".rtf", ".xml"
+    ]
     
     @validator("CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v):

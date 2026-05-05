@@ -15,8 +15,10 @@ from app.db.database import SessionLocal
 from app.models.document import Document, DocumentStatus
 from app.models.activity import Activity, ActivityType
 from app.services.document_loaders.loader_factory import load_document_from_bytes
-from app.services.embedding_service import embedding_service
+from app.services.document_loaders.base import DocumentContent
+from app.services.embedding_service_optimized import embedding_service_optimized
 from app.services.vector_db_service import vector_db_service
+from app.services.structure_aware_chunker import StructureAwareChunker, DocumentChunk
 from app.core.config import settings
 from app.core.logging import logger
 from app.core.exceptions import DocumentProcessingError
@@ -99,11 +101,17 @@ def get_progress(document_id: int) -> Optional[IngestionProgress]:
 
 
 class IngestionPipeline:
-    """Document ingestion pipeline."""
+    """Document ingestion pipeline with structure-aware chunking."""
     
     def __init__(self):
-        self.embedding_service = embedding_service
+        self.embedding_service = embedding_service_optimized
         self.vector_db = vector_db_service
+        self.chunker = StructureAwareChunker(
+            chunk_size=settings.CHUNK_SIZE,
+            chunk_overlap=settings.CHUNK_OVERLAP,
+            preserve_structure=True,
+            respect_boundaries=True,
+        )
     
     async def process_document(
         self,
@@ -114,13 +122,13 @@ class IngestionPipeline:
         db: Session
     ) -> bool:
         """
-        Process document through full ingestion pipeline.
+        Process document through full ingestion pipeline with structure-aware chunking.
         
         Stages:
-        1. Extract content from document
-        2. Chunk text into segments
-        3. Generate embeddings
-        4. Store in vector database
+        1. Extract content and structure from document
+        2. Structure-aware chunking with hierarchy preservation
+        3. Generate embeddings for chunks
+        4. Store in vector database with rich metadata
         5. Update document status
         """
         progress = IngestionProgress(
@@ -131,20 +139,21 @@ class IngestionPipeline:
         )
         
         try:
-            # Stage 1: Extract content
-            await self._extract_content(progress, file_content, filename, file_type)
+            # Stage 1: Extract content with structure
+            doc_content = await self._extract_content(progress, file_content, filename, file_type)
             
-            # Stage 2: Chunk text
-            chunks = await self._chunk_text(progress, progress.details.get("content", ""))
+            # Stage 2: Structure-aware chunking with streaming
+            chunks = await self._chunk_with_structure(progress, doc_content)
             
             if not chunks:
                 raise DocumentProcessingError("No text chunks generated")
             
             # Stage 3: Generate embeddings
-            embeddings = await self._generate_embeddings(progress, chunks)
+            chunk_texts = [chunk.content for chunk in chunks]
+            embeddings = await self._generate_embeddings(progress, chunk_texts)
             
-            # Stage 4: Index in vector DB
-            await self._index_document(progress, document_id, chunks, embeddings, filename)
+            # Stage 4: Index in vector DB with rich metadata
+            await self._index_document_with_metadata(progress, document_id, chunks, embeddings)
             
             # Stage 5: Update document status
             await self._finalize_document(progress, document_id, len(chunks), db)
@@ -162,11 +171,11 @@ class IngestionPipeline:
         file_content: bytes,
         filename: str,
         file_type: str
-    ) -> None:
-        """Extract content from document."""
+    ) -> DocumentContent:
+        """Extract content and structure from document."""
         progress.stage = IngestionStage.EXTRACTING
         progress.progress_percent = 10
-        progress.message = "Extracting document content..."
+        progress.message = "Extracting document content and structure..."
         _update_progress(progress)
         
         # Run extraction in thread pool
@@ -178,85 +187,158 @@ class IngestionPipeline:
         
         full_text = doc_content.to_text()
         
+        # Build rich metadata
+        headings = doc_content.get_headings()
+        heading_hierarchy = [
+            {"level": h.level or 1, "text": h.to_text()}
+            for h in headings[:20]  # Limit to first 20 headings
+        ]
+        
         progress.details.update({
             "content": full_text,
             "elements_count": len(doc_content.elements),
-            "headings": [h.to_text() for h in doc_content.get_headings()[:10]],
+            "headings": [h.to_text() for h in headings[:10]],
+            "heading_hierarchy": heading_hierarchy,
             "tables_count": len(doc_content.get_tables()),
             "images_count": len(doc_content.get_images()),
             "lists_count": len(doc_content.get_lists()),
+            "metadata": {
+                "title": doc_content.metadata.title,
+                "author": doc_content.metadata.author,
+                "page_count": doc_content.metadata.page_count,
+                "word_count": doc_content.metadata.word_count,
+            }
         })
         
         progress.progress_percent = 25
-        progress.message = f"Extracted {len(full_text)} characters, {len(doc_content.elements)} elements"
+        progress.message = f"Extracted {len(full_text)} chars, {len(doc_content.elements)} elements, {len(headings)} headings"
         _update_progress(progress)
+        
+        return doc_content
     
-    async def _chunk_text(self, progress: IngestionProgress, text: str) -> List[str]:
-        """Chunk text into segments."""
+    async def _chunk_with_structure(
+        self,
+        progress: IngestionProgress,
+        doc_content: DocumentContent
+    ) -> List[DocumentChunk]:
+        """Chunk document with structure awareness and streaming progress."""
         progress.stage = IngestionStage.CHUNKING
         progress.progress_percent = 30
-        progress.message = "Chunking text..."
+        progress.message = "Structure-aware chunking with hierarchy preservation..."
         _update_progress(progress)
         
-        from app.services.document_loaders.base import DocumentContent
+        chunks = []
+        chunk_count = 0
         
-        # Create temporary DocumentContent for chunking
-        temp_doc = DocumentContent(
-            elements=[],
-            raw_text=text
-        )
+        # Define progress callback for streaming
+        def on_chunking_progress(current: int, total: int, status: str):
+            # Map element progress to overall progress (30-40%)
+            percent = 30 + (current / max(total, 1)) * 10
+            progress.progress_percent = min(percent, 40)
+            progress.message = f"{status} ({chunk_count} chunks created)"
+            _update_progress(progress)
         
-        # Get chunks
-        chunks = temp_doc.get_text_chunks(
-            chunk_size=settings.CHUNK_SIZE,
-            overlap=settings.CHUNK_OVERLAP
-        )
+        # Stream chunks
+        async for chunk in self.chunker.chunk_document_streaming(
+            doc_content,
+            progress_callback=on_chunking_progress
+        ):
+            chunks.append(chunk)
+            chunk_count += 1
         
-        progress.details["chunks_count"] = len(chunks)
+        # Update chunk indices and totals
+        total = len(chunks)
+        for i, chunk in enumerate(chunks):
+            chunk.metadata.chunk_index = i
+            chunk.metadata.total_chunks = total
+        
+        # Collect structure stats
+        tables_preserved = sum(1 for c in chunks if c.metadata.contains_table)
+        lists_preserved = sum(1 for c in chunks if c.metadata.contains_list)
+        code_preserved = sum(1 for c in chunks if c.metadata.contains_code)
+        
+        progress.details.update({
+            "chunks_count": len(chunks),
+            "tables_preserved": tables_preserved,
+            "lists_preserved": lists_preserved,
+            "code_blocks_preserved": code_preserved,
+            "avg_chunk_size": sum(len(c.content) for c in chunks) // max(len(chunks), 1),
+            "heading_context_preserved": all(len(c.metadata.headings_hierarchy) > 0 for c in chunks),
+        })
+        
         progress.progress_percent = 40
-        progress.message = f"Created {len(chunks)} chunks"
+        progress.message = f"Created {len(chunks)} structure-aware chunks"
         _update_progress(progress)
         
         return chunks
     
     async def _generate_embeddings(
         self,
-        progress: IngestionProgress,
-        chunks: List[str]
+        progress: IngestionStage,
+        chunk_texts: List[str]
     ) -> List[List[float]]:
-        """Generate embeddings for chunks."""
+        """Generate embeddings with batch processing and progress tracking."""
         progress.stage = IngestionStage.EMBEDDING
         progress.progress_percent = 45
-        progress.message = "Generating embeddings..."
+        progress.message = f"Generating embeddings for {len(chunk_texts)} chunks (batch optimized)..."
         _update_progress(progress)
         
-        # Generate embeddings in batches
-        loop = asyncio.get_event_loop()
-        embeddings = await loop.run_in_executor(
-            None,
-            lambda: self.embedding_service.embed_documents(chunks)
+        # Progress callback for embedding generation
+        def on_embed_progress(completed: int, total: int):
+            # Map to progress range 45-70%
+            percent = 45 + (completed / total) * 25
+            progress.progress_percent = min(percent, 70)
+            progress.message = f"Generated {completed}/{total} embeddings..."
+            _update_progress(progress)
+        
+        # Use optimized embedding service with batching and concurrency
+        embeddings = await embedding_service_optimized.embed_documents(
+            chunk_texts,
+            progress_callback=on_embed_progress
         )
         
-        progress.details["embeddings_count"] = len(embeddings)
+        # Add embedding stats
+        stats = embedding_service_optimized.get_stats()
+        progress.details.update({
+            "embeddings_count": len(embeddings),
+            "embedding_provider": stats["provider"],
+            "embedding_model": stats["model"],
+            "batch_size_used": stats["batch_size"],
+            "concurrency_used": stats["concurrency"],
+            "cpu_optimized": stats["cpu_optimized"],
+        })
+        
         progress.progress_percent = 70
-        progress.message = f"Generated {len(embeddings)} embeddings"
+        progress.message = f"Generated {len(embeddings)} embeddings (batch_size={stats['batch_size']}, concurrency={stats['concurrency']})"
         _update_progress(progress)
         
         return embeddings
     
-    async def _index_document(
+    async def _index_document_with_metadata(
         self,
         progress: IngestionProgress,
         document_id: int,
-        chunks: List[str],
+        chunks: List[DocumentChunk],
         embeddings: List[List[float]],
-        filename: str
     ) -> None:
-        """Index document in vector database."""
+        """Index document in vector database with rich metadata."""
         progress.stage = IngestionStage.INDEXING
         progress.progress_percent = 75
-        progress.message = "Indexing in vector database..."
+        progress.message = "Indexing in vector database with rich metadata..."
         _update_progress(progress)
+        
+        # Prepare chunks and metadata
+        chunk_texts = [chunk.content for chunk in chunks]
+        
+        # Build rich metadata for each chunk
+        chunk_metadata = []
+        for chunk in chunks:
+            meta = chunk.metadata.to_dict()
+            meta.update({
+                "document_id": document_id,
+                "chunk_id": f"{document_id}_{chunk.metadata.chunk_index}",
+            })
+            chunk_metadata.append(meta)
         
         # Add to vector DB
         loop = asyncio.get_event_loop()
@@ -264,17 +346,23 @@ class IngestionPipeline:
             None,
             lambda: self.vector_db.add_documents(
                 document_id=str(document_id),
-                chunks=chunks,
+                chunks=chunk_texts,
                 embeddings=embeddings,
                 metadata={
-                    "source_file": filename,
+                    "source_file": chunks[0].metadata.filename if chunks else "",
                     "document_id": document_id,
+                    "chunks_metadata": chunk_metadata,
                 }
             )
         )
         
+        progress.details.update({
+            "indexed_chunks": len(chunks),
+            "rich_metadata_applied": True,
+        })
+        
         progress.progress_percent = 95
-        progress.message = "Indexing complete"
+        progress.message = "Indexing complete with rich metadata"
         _update_progress(progress)
     
     async def _finalize_document(

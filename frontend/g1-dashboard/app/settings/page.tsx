@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { api } from "@/lib/api";
 
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
@@ -32,6 +33,8 @@ function Toggle({ checked, onChange }: ToggleProps) {
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("general");
+  const [isLoading, setIsLoading] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
   // General Settings State
   const [autoSave, setAutoSave] = useState(true);
@@ -67,6 +70,80 @@ export default function Settings() {
   const [openaiKey, setOpenaiKey] = useState("");
   const [anthropicKey, setAnthropicKey] = useState("");
   const [cohereKey, setCohereKey] = useState("");
+
+  // Load settings on mount
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  const loadSettings = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.getSettings();
+      if (res.data) {
+        const settings = res.data as Record<string, any>;
+        // Update all settings from API
+        if (settings.llm_provider) setLlmProvider(settings.llm_provider);
+        if (settings.llm_model) setLlmModel(settings.llm_model);
+        if (settings.temperature !== undefined) setTemperature(settings.temperature);
+        if (settings.max_tokens) setMaxTokens(settings.max_tokens);
+        if (settings.top_p !== undefined) setTopP(settings.top_p);
+        if (settings.system_prompt) setSystemPrompt(settings.system_prompt);
+        if (settings.embedding_provider) setEmbeddingProvider(settings.embedding_provider);
+        if (settings.embedding_model) setEmbeddingModel(settings.embedding_model);
+        if (settings.embedding_dimensions) setEmbeddingDimension(settings.embedding_dimensions);
+        if (settings.chunk_size) setChunkSize(settings.chunk_size);
+        if (settings.chunk_overlap !== undefined) setChunkOverlap(settings.chunk_overlap);
+        if (settings.chunking_strategy) setChunkingStrategy(settings.chunking_strategy);
+        if (settings.batch_size) setBatchSize(settings.batch_size);
+        if (settings.vector_db_type) setVectorDb(settings.vector_db_type);
+        if (settings.similarity_threshold !== undefined) setSimilarityThreshold(settings.similarity_threshold);
+        if (settings.top_k) setTopK(settings.top_k);
+      }
+    } catch (error) {
+      console.error("Failed to load settings:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const saveSettings = async () => {
+    setSaveStatus("saving");
+    try {
+      const settings = {
+        llm_provider: llmProvider,
+        llm_model: llmModel,
+        temperature: temperature,
+        max_tokens: maxTokens,
+        top_p: topP,
+        system_prompt: systemPrompt,
+        embedding_provider: embeddingProvider,
+        embedding_model: embeddingModel,
+        embedding_dimensions: embeddingDimension,
+        chunk_size: chunkSize,
+        chunk_overlap: chunkOverlap,
+        chunking_strategy: chunkingStrategy,
+        batch_size: batchSize,
+        vector_db_type: vectorDb,
+        similarity_threshold: similarityThreshold,
+        top_k: topK,
+        openai_api_key: openaiKey || undefined,
+        anthropic_api_key: anthropicKey || undefined,
+        cohere_api_key: cohereKey || undefined,
+      };
+
+      const res = await api.updateSettings(settings);
+      if (!res.error) {
+        setSaveStatus("saved");
+        setTimeout(() => setSaveStatus("idle"), 3000);
+      } else {
+        setSaveStatus("error");
+      }
+    } catch (error) {
+      console.error("Failed to save settings:", error);
+      setSaveStatus("error");
+    }
+  };
 
   const tabs = [
     { id: "general", label: "General", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" },
@@ -492,11 +569,50 @@ export default function Settings() {
 
         {/* Save Button */}
         <div className="flex justify-end mt-8">
-          <button className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium hover:opacity-90 transition-all flex items-center gap-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Save Settings
+          <button
+            onClick={saveSettings}
+            disabled={saveStatus === "saving"}
+            className={cn(
+              "px-6 py-3 rounded-xl font-medium transition-all flex items-center gap-2",
+              saveStatus === "saving"
+                ? "bg-muted text-muted-foreground cursor-wait"
+                : saveStatus === "saved"
+                ? "bg-green-500 text-white"
+                : saveStatus === "error"
+                ? "bg-red-500 text-white"
+                : "bg-primary text-primary-foreground hover:opacity-90"
+            )}
+          >
+            {saveStatus === "saving" ? (
+              <>
+                <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Saving...
+              </>
+            ) : saveStatus === "saved" ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Saved!
+              </>
+            ) : saveStatus === "error" ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Error Saving
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Save Settings
+              </>
+            )}
           </button>
         </div>
       </div>

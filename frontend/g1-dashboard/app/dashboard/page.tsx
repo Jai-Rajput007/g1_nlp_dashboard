@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { api } from "@/lib/api";
 
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(" ");
@@ -57,7 +58,47 @@ export default function Dashboard() {
 
   useEffect(() => {
     setMounted(true);
-    // TODO: Fetch data from backend API
+    
+    // Fetch data from backend API
+    const fetchData = async () => {
+      try {
+        // Fetch dashboard stats
+        const statsRes = await api.getDashboardStats();
+        if (statsRes.data) {
+          const data = statsRes.data as Stats;
+          setStats(data);
+        }
+        
+        // Fetch recent documents
+        const docsRes = await api.getRecentDocuments();
+        if (docsRes.data) {
+          const docs = (docsRes.data as { documents?: Document[] }).documents || [];
+          setRecentDocs(docs);
+        }
+        
+        // Fetch recent activities
+        const activitiesRes = await api.getRecentActivities();
+        if (activitiesRes.data) {
+          const acts = (activitiesRes.data as { activities?: Activity[] }).activities || [];
+          setActivities(acts);
+        }
+        
+        // Fetch model status
+        const modelsRes = await api.getModelStatus();
+        if (modelsRes.data) {
+          const models = (modelsRes.data as { models?: ModelStatus[] }).models || [];
+          setModelStatus(models);
+        }
+      } catch (error) {
+        console.error("Failed to fetch dashboard data:", error);
+      }
+    };
+    
+    fetchData();
+    
+    // Refresh data every 30 seconds
+    const interval = setInterval(fetchData, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
