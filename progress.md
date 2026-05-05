@@ -1,45 +1,79 @@
 # RAG Robot System - Progress Tracker
 
 ## Project Overview
+
 Offline RAG document management system for robot with 128GB Thor AGX. Hybrid architecture (metadata + hierarchical + vector search) using Next.js 16.2, FastAPI, PostgreSQL/pgvector, Ollama.
 
 ---
 
 ## Architecture Summary
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | Next.js 16.2 + React 19.2 + TypeScript + Tailwind + Zustand |
-| Backend | FastAPI + LangChain |
-| Database | PostgreSQL + pgvector |
-| LLM | Ollama (configurable) |
-| Embeddings | nomic-embed-text (switchable) |
-| Document Parser | unstructured[pdf] + pytesseract |
+| Layer           | Technology                                                  |
+| --------------- | ----------------------------------------------------------- |
+| Frontend        | Next.js 16.2 + React 19.2 + TypeScript + Tailwind + Zustand |
+| Backend         | FastAPI + LangChain                                         |
+| Database        | PostgreSQL + pgvector                                       |
+| LLM             | Ollama (configurable)                                       |
+| Embeddings      | nomic-embed-text (switchable)                               |
+| Document Parser | unstructured[pdf] + pytesseract                             |
 
 ---
 
 ## Features Checklist
 
 ### Phase 1: Core Infrastructure
-- [x] **1.1** Project setup - Next.js 16.2 frontend structure
-  - [x] Amber Minimal theme setup (light/dark modes)
-  - [x] Theme toggle functionality
-  - [x] Dashboard layout with navigation
-- [ ] **1.2** FastAPI backend structure with async support
-- [ ] **1.3** PostgreSQL + pgvector schema design
+
+- [X] **1.1** Project setup - Next.js 16.2 frontend structure
+  - [X] Amber Minimal theme setup (light/dark modes)
+  - [X] Theme toggle functionality
+  - [X] Dashboard layout with navigation
+- [X] **1.2** FastAPI backend structure with async support
+  - [X] Modular folder structure (api, core, db, models, schemas, services)
+  - [X] Configuration management with env vars
+  - [X] Logging setup
+  - [X] Exception handling
+- [X] **1.3** Database setup (SQLite with SQLAlchemy, ready for PostgreSQL/pgvector)
+  - [X] Document model with status tracking
+  - [X] Activity log model
+  - [X] Settings persistence model
 - [ ] **1.4** Ollama integration with model registry
-- [ ] **1.5** Environment configuration (.env, docker-compose optional)
+- [X] **1.5** Environment configuration (.env.example, config.py)
 
 ### Phase 2: Document Processing Pipeline
-- [ ] **2.1** Document upload API (streaming for <10MB, async for >10MB)
-- [ ] **2.2** Rich metadata extraction (filename, date, author, pages, sections, tags)
-- [ ] **2.3** Document parser/loader (PyMuPDF, unstructured, LlamaParse optional)
-- [ ] **2.4** Structure-aware chunking (recursive + headings/sections, configurable size/overlap)
+
+- [X] **2.1** Document upload API with async processing support
+- [X] **2.2** Rich metadata extraction (filename, date, author, pages, sections, tags)
+- [X] **2.3** Comprehensive Document Loaders (8 formats supported):
+  - [X] **PDF Loader**: Text, headings, images, tables (camelot/pdfplumber)
+  - [X] **DOCX Loader**: Text, headings, lists, tables, images
+  - [X] **Markdown Loader**: Full MD syntax (headings, code blocks, tables, lists, images)
+  - [X] **HTML Loader**: Structured content extraction (BeautifulSoup)
+  - [X] **CSV/TSV Loader**: Table structure with stats
+  - [X] **JSON/JSONL Loader**: Structured data with flattening
+  - [X] **Text Loader**: Plain text with basic structure
+  - [X] **Loader Factory**: Auto-detect file type and use appropriate loader
+  - [X] **LangChain Integration**: Fallback loaders for extended format support
+    - [X] EPUB (ebooks)
+    - [X] PPTX (PowerPoint presentations)
+    - [X] ODT (OpenDocument Text)
+    - [X] RTF (Rich Text Format)
+    - [X] XML documents
+    - [X] Wrapper converts LangChain output to our `DocumentContent` format with structure detection
+- [X] **2.4** Structure-aware chunking:
+  - [X] Semantic chunking (paragraph-aware)
+  - [X] Fixed-size chunking with overlap
+  - [X] Recursive chunking (tries multiple separators)
+  - [X] Configurable chunk size and overlap
 - [ ] **2.5** Embedding generation (batch + CPU optimized)
-- [ ] **2.6** Vector storage with metadata in pgvector
-- [ ] **2.7** Background job processing with progress tracking
+- [X] **2.6** Vector storage with ChromaDB (ready for pgvector)
+- [X] **2.7** Ingestion pipeline with progress tracking:
+  - [ ] 5-stage pipeline: Upload → Extract → Chunk → Embed → Index
+  - [X] Real-time progress updates with callbacks
+  - [X] Activity logging for all operations
+  - [X] Error handling with detailed messages
 
 ### Phase 3: Retrieval & Query
+
 - [ ] **3.1** Query processing (user question + metadata filters)
 - [ ] **3.2** Hybrid retrieval (vector + metadata filtering + hierarchy)
 - [ ] **3.3** Context builder (top-k chunks + source metadata + page/section info)
@@ -47,6 +81,7 @@ Offline RAG document management system for robot with 128GB Thor AGX. Hybrid arc
 - [ ] **3.5** Response formatting with citations
 
 ### Phase 4: UI/UX
+
 - [ ] **4.1** Document upload interface with progress
 - [ ] **4.2** Document listing with filters (date, type, collection, tags)
 - [ ] **4.3** Document details view (preview, metadata, re-index, delete)
@@ -55,6 +90,7 @@ Offline RAG document management system for robot with 128GB Thor AGX. Hybrid arc
 - [ ] **4.6** Model configuration panel (LLM + embedding selection)
 
 ### Phase 5: Advanced Features
+
 - [ ] **5.1** OCR for scanned PDFs/images
 - [ ] **5.2** Multilingual support (Hindi/English)
 - [ ] **5.3** Incremental indexing
@@ -63,6 +99,7 @@ Offline RAG document management system for robot with 128GB Thor AGX. Hybrid arc
 - [ ] **5.6** Graph RAG extension hooks (future)
 
 ### Phase 6: Auth & Multi-user (Future)
+
 - [ ] **6.1** Single-user auth (current)
 - [ ] **6.2** Role-based access (admin, editor, viewer)
 - [ ] **6.3** Private vs shared collections
@@ -115,15 +152,16 @@ CREATE TABLE chunks (
 
 ## Current Status
 
-**Last Updated:** 2026-05-01
-**Current Phase:** Planning Complete, Ready for Implementation
-**Next Action:** Create project structure
+**Last Updated:** 2026-05-04
+**Current Phase:** Backend Infrastructure Complete, Document Loaders Implemented
+**Next Action:** Connect document API to ingestion pipeline
 
 ---
 
 ## Working Notes
 
 ### Key Decisions Log
+
 - **2026-04-30:** Switched from LanceDB to pgvector (better metadata filtering, no migration pain)
 - **2026-05-01:** Confirmed Next.js 16.2 with AI features (AGENTS.md, Cache Components, React 19.2)
 - **2026-04-30:** Graph RAG deferred - architecture has extension hooks
@@ -131,6 +169,7 @@ CREATE TABLE chunks (
 - **2026-04-30:** Streaming upload (<10MB), async background (>10MB)
 
 ### Resource Allocation (128GB Thor AGX)
+
 - RAG System: ~64GB available
 - Embedding batch size: 512-1024
 - Parallel document processing: 2-4 files
@@ -141,6 +180,7 @@ CREATE TABLE chunks (
 ## Verification Checklist
 
 Before marking complete, verify:
+
 - [ ] Feature works as specified
 - [ ] Tests pass (if applicable)
 - [ ] No dead code or unused imports
@@ -150,6 +190,7 @@ Before marking complete, verify:
 ---
 
 ## Quick Links
+
 - Original research: `RAG documentation.md`
 - Architecture: `Final Arch.txt`
 - Guidelines: `SKILL.md`, `CURSOR.md`
