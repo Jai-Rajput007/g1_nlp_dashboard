@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f9ba21c7`
+- Built from commit: `b91e3a2b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -141,64 +141,64 @@ Cohesion: 0.11
 Nodes (21): DocumentProcessor, DOCXExtractor, extract(), PDFExtractor, Document processing service., Extract text from any supported file., Split text into chunks., Fixed-size chunking with overlap. (+13 more)
 
 ### Community 6 - "Community 6"
+Cohesion: 0.1
+Nodes (17): DocumentMetadata, Check if paragraph is a list item., create_langchain_loader(), LangChainLoaderWrapper, LangChain document loader wrapper for fallback format support., Parse content and try to detect structure., Wrapper for LangChain document loaders to adapt to our format., Load using LangChain loader. (+9 more)
+
+### Community 7 - "Community 7"
+Cohesion: 0.12
+Nodes (16): ABC, LLMError, Raised when LLM operation fails., LLMProvider, LLMService, OllamaProvider, OpenAIProvider, LLM service for chat completion. (+8 more)
+
+### Community 8 - "Community 8"
 Cohesion: 0.14
 Nodes (16): Build context using specified strategy., ContextBuilderService, ContextChunk, Context builder service for assembling retrieved chunks into LLM context., Convert retrieval results to context chunks., Build context grouped by hierarchy., Build context sorted by relevance., Context chunk with metadata for assembly. (+8 more)
 
-### Community 7 - "Community 7"
-Cohesion: 0.1
-Nodes (16): Extract DOCX metadata., Check if paragraph is a list item., create_langchain_loader(), LangChainLoaderWrapper, LangChain document loader wrapper for fallback format support., Parse content and try to detect structure., Wrapper for LangChain document loaders to adapt to our format., Detect if line is a heading. (+8 more)
-
-### Community 8 - "Community 8"
-Cohesion: 0.12
-Nodes (15): DocumentMetadata, PDFLoader, PDF document loader with support for images, tables, and structured content., Extract content from a single page., Heuristic to detect if a line is a heading., PDF loader with comprehensive content extraction., Detect heading level., Extract images from page. (+7 more)
-
 ### Community 9 - "Community 9"
-Cohesion: 0.19
-Nodes (17): EmbeddingError, Raised when embedding generation fails., CohereEmbeddingProvider, embed(), embed_query(), EmbeddingProvider, OllamaEmbeddingProvider, OpenAIEmbeddingProvider (+9 more)
+Cohesion: 0.11
+Nodes (14): DOCXLoader, DOCX document loader with support for images, tables, lists, and formatting., Extract DOCX metadata., Check if list item is part of ordered list., Extract text from paragraph with run formatting., DOCX loader with comprehensive content extraction., Process a paragraph into a content element., Detect code block by style. (+6 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.13
-Nodes (15): ABC, LLMError, Raised when LLM operation fails., LLMProvider, LLMService, OllamaProvider, OpenAIProvider, LLM service for chat completion. (+7 more)
-
-### Community 11 - "Community 11"
-Cohesion: 0.13
 Nodes (11): Parse HTML table element., MarkdownLoader, Markdown document loader with support for all MD elements., Markdown loader with full syntax support., Check if line is part of a table., Load Markdown from file path., Check if line is a list item., Parse image reference. (+3 more)
 
-### Community 12 - "Community 12"
-Cohesion: 0.12
-Nodes (13): DOCXLoader, DOCX document loader with support for images, tables, lists, and formatting., Check if list item is part of ordered list., Extract text from paragraph with run formatting., DOCX loader with comprehensive content extraction., Process a paragraph into a content element., Detect code block by style., Detect quote by style. (+5 more)
-
-### Community 13 - "Community 13"
-Cohesion: 0.15
-Nodes (15): DocumentProcessingError, Raised when document processing fails., load(), load_from_bytes(), CSVLoader, CSV document loader with table structure support., Detect CSV delimiter from sample., Parse CSV text into rows and headers. (+7 more)
-
-### Community 14 - "Community 14"
+### Community 11 - "Community 11"
 Cohesion: 0.16
 Nodes (18): geistMono, geistSans, metadata, ChatIcon(), DashboardIcon(), defaultNavItems, HomeIcon(), LibraryIcon() (+10 more)
 
-### Community 15 - "Community 15"
+### Community 12 - "Community 12"
 Cohesion: 0.12
 Nodes (17): BaseSettings, Config, Application configuration management., Application settings with environment variable support., Settings, get_settings(), Settings API endpoints., Settings response schema. (+9 more)
 
-### Community 16 - "Community 16"
+### Community 13 - "Community 13"
 Cohesion: 0.09
 Nodes (21): Adding a New Feature, API Documentation, code:block1 (backend/), code:bash (python -m venv venv), code:bash (pip install -r requirements.txt), code:bash (cp .env.example .env), code:bash (python main.py), code:bash (pytest) (+13 more)
 
-### Community 17 - "Community 17"
+### Community 14 - "Community 14"
 Cohesion: 0.1
 Nodes (20): Architecture Summary, code:sql (-- Documents table), Completed, Current Status, Database Schema, Features Checklist, Key Decisions Log, Phase 1: Core Infrastructure (+12 more)
 
-### Community 18 - "Community 18"
+### Community 15 - "Community 15"
 Cohesion: 0.12
 Nodes (11): EmbeddingProvider, OllamaEmbeddingProvider, OpenAIEmbeddingProvider, Optimized embedding generation service with batch processing and CPU optimizatio, Generate embedding for query., Abstract base class for embedding providers., Ollama embedding provider with batch and retry support., Generate embeddings using Ollama with retry logic. (+3 more)
 
-### Community 19 - "Community 19"
+### Community 16 - "Community 16"
 Cohesion: 0.17
 Nodes (11): Retrieval service for hybrid search with metadata filtering and hierarchy., Service for hybrid retrieval with prefiltering, hierarchy, and vector search., Build prefilter dictionary from query filters.         These filters are applied, Apply post-filters that couldn't be applied in prefiltering., Enrich result with hierarchy information from metadata., Perform hybrid retrieval with prefiltering and vector search.                  F, Retrieve using hierarchy-based filtering.                  Args:             que, Retrieve with parent section context for each result.                  This is u (+3 more)
 
-### Community 20 - "Community 20"
+### Community 17 - "Community 17"
 Cohesion: 0.17
 Nodes (10): Structure-aware document chunking service with hierarchy preservation., Advanced chunking that preserves document structure and hierarchy., Stream chunks with progress updates.                  Args:             document, Chunk document synchronously (for non-streaming use).                  Returns:, Update heading context when encountering a heading., Create a DocumentChunk from elements., Get elements to carry over for overlap., Recursive chunking for plain text. (+2 more)
+
+### Community 18 - "Community 18"
+Cohesion: 0.12
+Nodes (10): EmbeddingService, OpenAIEmbeddingProvider, Generate embedding for query., Main embedding service., Create embedding provider based on settings., Generate embeddings for documents., Generate embedding for query., Generate embeddings using OpenAI. (+2 more)
+
+### Community 19 - "Community 19"
+Cohesion: 0.27
+Nodes (13): EmbeddingError, Raised when embedding generation fails., CohereEmbeddingProvider, embed(), embed_query(), EmbeddingProvider, OllamaEmbeddingProvider, Embedding generation service. (+5 more)
+
+### Community 20 - "Community 20"
+Cohesion: 0.18
+Nodes (11): DocumentProcessingError, Raised when document processing fails., load(), Load DOCX from file path., PDFLoader, PDF document loader with support for images, tables, and structured content., Extract content from a single page., PDF loader with comprehensive content extraction. (+3 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.21
@@ -213,84 +213,84 @@ Cohesion: 0.17
 Nodes (11): Document ingestion pipeline with progress tracking and async processing., Chunk document with structure awareness and streaming progress., Generate embeddings with batch processing and progress tracking., Finalize document processing., Handle ingestion failure., Register callback for progress updates., Unregister progress callback., Update progress and notify callbacks. (+3 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.17
-Nodes (10): ChunkMetadata, DocumentChunk, A document chunk with rich metadata., Convert to dictionary., Rich metadata for a document chunk., Chunk large elements like tables or code blocks., Chunk tables intelligently, preserving headers., Chunk code blocks by logical sections. (+2 more)
-
-### Community 25 - "Community 25"
 Cohesion: 0.16
 Nodes (9): DocumentContent, Get all image elements., Split document into text chunks., Convert element to plain text., Complete document content with structure., Convert all content to plain text., Get all heading elements., Get all table elements. (+1 more)
 
+### Community 25 - "Community 25"
+Cohesion: 0.17
+Nodes (10): ChunkMetadata, DocumentChunk, A document chunk with rich metadata., Convert to dictionary., Rich metadata for a document chunk., Chunk large elements like tables or code blocks., Chunk tables intelligently, preserving headers., Chunk code blocks by logical sections. (+2 more)
+
 ### Community 26 - "Community 26"
-Cohesion: 0.15
-Nodes (7): EmbeddingServiceOptimized, Optimized embedding service with batch processing and CPU optimization., Create embedding provider based on settings., Generate embeddings with batch processing and concurrency control., Stream embeddings as they are generated.                  Yields:             Di, Generate embedding for query (synchronous)., Generate embedding for query (async).
+Cohesion: 0.14
+Nodes (8): EmbeddingServiceOptimized, Optimized embedding service with batch processing and CPU optimization., Create embedding provider based on settings., Generate embeddings with batch processing and concurrency control., Stream embeddings as they are generated.                  Yields:             Di, Generate embedding for query (synchronous)., Generate embedding for query (async)., Generate embedding for query.
 
 ### Community 27 - "Community 27"
 Cohesion: 0.2
-Nodes (8): JSONLoader, JSON document loader with structure preservation., JSON loader with structured content extraction., Flatten JSON to readable text., Load JSON from file path., Load JSON from bytes., Parse JSON Lines format., Parse JSON structure into content elements.
+Nodes (8): Heuristic to detect if a line is a heading., Plain text document loader., Detect heading level., Load text from file path., Load text from bytes., Parse plain text into structured elements., Simple heading detection., TextLoader
 
 ### Community 28 - "Community 28"
 Cohesion: 0.22
-Nodes (8): HTMLLoader, HTML document loader with support for structured content extraction., Parse HTML with regex fallback., HTML loader with content structure extraction., Load HTML from file path., Extract plain text from HTML., Load HTML from bytes., Parse HTML with BeautifulSoup.
+Nodes (9): load_from_bytes(), JSONLoader, JSON document loader with structure preservation., JSON loader with structured content extraction., Flatten JSON to readable text., Load JSON from file path., Load JSON from bytes., Parse JSON Lines format. (+1 more)
 
 ### Community 29 - "Community 29"
+Cohesion: 0.19
+Nodes (8): CSVLoader, CSV document loader with table structure support., Detect CSV delimiter from sample., Parse CSV text into rows and headers., Calculate basic statistics for numeric columns., Format CSV as readable text., CSV loader with table structure extraction., Load CSV from file path.
+
+### Community 30 - "Community 30"
+Cohesion: 0.22
+Nodes (8): HTMLLoader, HTML document loader with support for structured content extraction., Parse HTML with regex fallback., HTML loader with content structure extraction., Load HTML from file path., Extract plain text from HTML., Load HTML from bytes., Parse HTML with BeautifulSoup.
+
+### Community 31 - "Community 31"
 Cohesion: 0.14
 Nodes (14): 1. Navigate to backend directory, 2. Create Python virtual environment, 3. Install Python dependencies, 4. Configure environment variables, 5. Initialize database, 6. Test backend startup, ⚙️ Backend Setup, code:bash (pip install --upgrade pip) (+6 more)
 
-### Community 30 - "Community 30"
+### Community 32 - "Community 32"
 Cohesion: 0.14
 Nodes (13): **1. Normal RAG (Traditional Document RAG)**, **2. Vectorless RAG (PageIndex)**, **3. Graph RAG**, **4. Knowledge Augmented Generation (KAG)**, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (┌───────────────────────────────────────────────────────────), code:block3 (┌───────────────────────────────────────────────────────────), code:block4 (┌───────────────────────────────────────────────────────────) (+5 more)
 
-### Community 31 - "Community 31"
+### Community 33 - "Community 33"
 Cohesion: 0.24
 Nodes (10): ContentType, ElementType, Base document loader interface., Types of content elements., Element types for structured content., Enum, IngestionStage, Stages of document ingestion. (+2 more)
 
-### Community 32 - "Community 32"
+### Community 34 - "Community 34"
 Cohesion: 0.18
 Nodes (11): 1. Install Docker & Docker Compose, 2. Install Ollama (for local LLM), 3. Install Node.js & npm, 4. Install Python 3.11+, 5. Install system dependencies, code:bash (# Ubuntu/Debian), code:bash (curl -fsSL https://ollama.com/install.sh | sh), code:bash (# Using NodeSource (Ubuntu/Debian)) (+3 more)
 
-### Community 33 - "Community 33"
+### Community 35 - "Community 35"
 Cohesion: 0.2
 Nodes (10): 1. Navigate to frontend directory, 2. Install dependencies, 3. Configure frontend environment, 4. Build and start frontend, code:bash (cd /path/to/project/frontend/g1-dashboard), code:bash (# Using npm), code:bash (# Create .env.local), code:env (NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1) (+2 more)
 
-### Community 34 - "Community 34"
+### Community 36 - "Community 36"
 Cohesion: 0.2
 Nodes (9): 10. KEY TECHNICAL DECISIONS, 12. FILES TO CHECK FOR ERRORS, 1. PROJECT OVERVIEW, 2. PROJECT STRUCTURE, 8. PENDING FEATURES, code:block1 (Implementation/), Phase 5: Advanced Features, Phase 6: Auth & Multi-user (+1 more)
 
-### Community 35 - "Community 35"
-Cohesion: 0.25
-Nodes (5): EmbeddingService, Main embedding service., Create embedding provider based on settings., Generate embedding for query., Create LLM provider based on settings.
-
-### Community 36 - "Community 36"
+### Community 37 - "Community 37"
 Cohesion: 0.22
 Nodes (9): code:bash (# Check if PostgreSQL is running), code:bash (# Check if Ollama is running), code:bash (# Ensure virtual environment is activated), code:bash (# Find and kill process using port 8000), Issue: "Cannot connect to PostgreSQL", Issue: "Module not found" in Python, Issue: "Ollama connection refused", Issue: "Port already in use" (+1 more)
 
-### Community 37 - "Community 37"
+### Community 38 - "Community 38"
 Cohesion: 0.22
 Nodes (9): 1. Create `docker-compose.yml` in project root, 2. Create `Dockerfile` for backend, 3. Create `Dockerfile` for frontend, 4. Run with Docker Compose, code:yaml (version: '3.8'), code:dockerfile (# backend/Dockerfile), code:dockerfile (# frontend/g1-dashboard/Dockerfile), code:bash (# Build and start all services) (+1 more)
 
-### Community 38 - "Community 38"
+### Community 39 - "Community 39"
 Cohesion: 0.22
 Nodes (5): 5. DATABASE SCHEMA, Activities Table, Chunks Table (PostgreSQL with pgvector), Documents Table, Settings Table
 
-### Community 39 - "Community 39"
+### Community 40 - "Community 40"
 Cohesion: 0.22
 Nodes (9): 9. COMMON ISSUES & SOLUTIONS, code:bash (# Check if running), code:bash (# Check Ollama), code:bash (cd backend), Issue: "Cannot connect to PostgreSQL", Issue: Embedding service slow, Issue: Frontend can't connect to backend, Issue: "Module not found" in Python (+1 more)
 
-### Community 40 - "Community 40"
+### Community 41 - "Community 41"
 Cohesion: 0.25
 Nodes (7): Backend (.env), code:block35 (project-root/), 📝 Environment Variables Reference, Frontend (.env.local), Linux Setup Guide - RAG Document Processing System, 📁 Project Structure, 🎉 You're Ready!
 
-### Community 41 - "Community 41"
+### Community 42 - "Community 42"
 Cohesion: 0.33
 Nodes (4): Convert to dictionary for API response., IngestionProgress, Index document in vector database with rich metadata., Track ingestion progress.
 
-### Community 42 - "Community 42"
-Cohesion: 0.29
-Nodes (5): get_db(), init_db(), Database connection and session management., Get database session., Initialize database tables.
-
 ### Community 43 - "Community 43"
 Cohesion: 0.29
-Nodes (7): Access the Application, code:bash (sudo systemctl start postgresql), code:bash (ollama serve), code:bash (cd /path/to/project/backend), code:bash (cd /path/to/project/frontend/g1-dashboard), Manual Start (Development), 🚀 Running the Application
+Nodes (5): get_db(), init_db(), Database connection and session management., Get database session., Initialize database tables.
 
 ### Community 44 - "Community 44"
 Cohesion: 0.29
@@ -298,7 +298,7 @@ Nodes (7): 1. Test Ollama, 2. Test Backend API, 3. Test Chat, code:bash (curl ht
 
 ### Community 45 - "Community 45"
 Cohesion: 0.29
-Nodes (7): 11. DEBUGGING TIPS, Check Service Logs, code:bash (# Backend logs (if using uvicorn)), code:bash (# Test embedding), code:bash (# PostgreSQL), Database Inspection, Test Individual Components
+Nodes (7): Access the Application, code:bash (sudo systemctl start postgresql), code:bash (ollama serve), code:bash (cd /path/to/project/backend), code:bash (cd /path/to/project/frontend/g1-dashboard), Manual Start (Development), 🚀 Running the Application
 
 ### Community 46 - "Community 46"
 Cohesion: 0.29
@@ -306,19 +306,19 @@ Nodes (7): 4.1 Chat (`/api/v1/chat/`), 4.2 Documents (`/api/v1/documents/`), 4.3
 
 ### Community 47 - "Community 47"
 Cohesion: 0.29
-Nodes (6): Claude Code vs Cursor, For contributors, In this repository, Optional: personal Agent Skills, Use the same guidelines in another project, Using this repo with Cursor
+Nodes (7): 11. DEBUGGING TIPS, Check Service Logs, code:bash (# Backend logs (if using uvicorn)), code:bash (# Test embedding), code:bash (# PostgreSQL), Database Inspection, Test Individual Components
 
 ### Community 48 - "Community 48"
 Cohesion: 0.29
-Nodes (6): 1. Think Before Coding, 2. Simplicity First, 3. Surgical Changes, 4. Goal-Driven Execution, code:block1 (1. [Step] → verify: [check]), Karpathy Guidelines
+Nodes (6): Claude Code vs Cursor, For contributors, In this repository, Optional: personal Agent Skills, Use the same guidelines in another project, Using this repo with Cursor
 
 ### Community 49 - "Community 49"
-Cohesion: 0.4
-Nodes (4): create_application(), FastAPI application factory., Create and configure FastAPI application., Main application entry point.
+Cohesion: 0.29
+Nodes (6): 1. Think Before Coding, 2. Simplicity First, 3. Surgical Changes, 4. Goal-Driven Execution, code:block1 (1. [Step] → verify: [check]), Karpathy Guidelines
 
 ### Community 50 - "Community 50"
-Cohesion: 0.33
-Nodes (3): Generate embedding for query., Generate embedding for query., Generate embeddings using Cohere.
+Cohesion: 0.4
+Nodes (4): create_application(), FastAPI application factory., Create and configure FastAPI application., Main application entry point.
 
 ### Community 51 - "Community 51"
 Cohesion: 0.4
@@ -326,15 +326,15 @@ Nodes (5): code:bash (# Create docker-compose for database services), code:bash 
 
 ### Community 52 - "Community 52"
 Cohesion: 0.4
-Nodes (5): 13. QUICK START (After Setup), code:bash (docker start rag-postgres), code:bash (ollama serve), code:bash (cd backend), code:bash (cd frontend/g1-dashboard)
+Nodes (5): 7. COMPLETED FEATURES, Phase 1: Core Infrastructure ✅, Phase 2: Document Processing ✅, Phase 3: Retrieval & Query ✅, Phase 4: Frontend-Backend Integration ✅
 
 ### Community 53 - "Community 53"
 Cohesion: 0.4
-Nodes (5): 6. ENVIRONMENT CONFIGURATION, Backend (.env), code:bash (# Database), code:bash (NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1), Frontend (.env.local)
+Nodes (5): 13. QUICK START (After Setup), code:bash (docker start rag-postgres), code:bash (ollama serve), code:bash (cd backend), code:bash (cd frontend/g1-dashboard)
 
 ### Community 54 - "Community 54"
 Cohesion: 0.4
-Nodes (5): 7. COMPLETED FEATURES, Phase 1: Core Infrastructure ✅, Phase 2: Document Processing ✅, Phase 3: Retrieval & Query ✅, Phase 4: Frontend-Backend Integration ✅
+Nodes (5): 6. ENVIRONMENT CONFIGURATION, Backend (.env), code:bash (# Database), code:bash (NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1), Frontend (.env.local)
 
 ### Community 55 - "Community 55"
 Cohesion: 0.4
@@ -356,11 +356,11 @@ Nodes (4): 3.7 Query Processing Service (`query_processing_service.py`), code:py
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `DocumentProcessingError` connect `Community 13` to `Community 1`, `Community 2`, `Community 3`, `Community 5`, `Community 7`, `Community 8`, `Community 41`, `Community 11`, `Community 12`, `Community 23`, `Community 27`, `Community 28`, `Community 31`?**
+- **Why does `DocumentProcessingError` connect `Community 20` to `Community 33`, `Community 2`, `Community 3`, `Community 1`, `Community 5`, `Community 6`, `Community 9`, `Community 42`, `Community 10`, `Community 23`, `Community 27`, `Community 28`, `Community 29`, `Community 30`?**
   _High betweenness centrality (0.115) - this node is a cross-community bridge._
-- **Why does `DocumentContent` connect `Community 25` to `Community 2`, `Community 7`, `Community 8`, `Community 41`, `Community 11`, `Community 12`, `Community 13`, `Community 20`, `Community 23`, `Community 56`, `Community 24`, `Community 27`, `Community 28`, `Community 31`?**
+- **Why does `DocumentContent` connect `Community 24` to `Community 33`, `Community 2`, `Community 6`, `Community 9`, `Community 42`, `Community 10`, `Community 17`, `Community 20`, `Community 23`, `Community 56`, `Community 25`, `Community 27`, `Community 28`, `Community 29`, `Community 30`?**
   _High betweenness centrality (0.039) - this node is a cross-community bridge._
-- **Why does `ChatService` connect `Community 0` to `Community 1`, `Community 6`, `Community 9`?**
+- **Why does `ChatService` connect `Community 0` to `Community 8`, `Community 1`, `Community 7`?**
   _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **Are the 45 inferred relationships involving `DocumentProcessingError` (e.g. with `IngestionStage` and `IngestionProgress`) actually correct?**
   _`DocumentProcessingError` has 45 INFERRED edges - model-reasoned connections that need verification._
