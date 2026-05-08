@@ -1,0 +1,350 @@
+{
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/postcss.config.mjs": {
+    "mtime": 1778223975.0850337,
+    "hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/eslint.config.mjs": {
+    "mtime": 1778223975.0829415,
+    "hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/next.config.ts": {
+    "mtime": 1778223975.0850337,
+    "hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/lib/utils.ts": {
+    "mtime": 1778223975.0850337,
+    "hash": "618d00bf4537ce84f9ba62c5b215fb30"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/lib/api.ts": {
+    "mtime": 1778223975.084625,
+    "hash": "b42456e7c429e1aea1dfdd8cfec5fb97"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/layout.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "050277939e30d61d061b40350c1fd520"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/page.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "6510f56f9290ea97d63f6882f203b266"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/components/limelight-nav.tsx": {
+    "mtime": 1778223975.0828247,
+    "hash": "318b8533ccc5518f3902c7f45b42aad6"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/components/theme-toggle.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "7773e5a2f8d350778338982b4a2fa348"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/components/theme-provider.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "b74974a98d553e4ecae73c788f267330"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/components/ui/expanding-cards.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "089bc0893a72fd380ad50d97233c79c3"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/settings/page.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "a1109ad38a6f2c125c0809dbce47fde4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/library/page.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "82b98699efa5126d481d1f38b7179c11"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/chat/page.tsx": {
+    "mtime": 1778223975.0828247,
+    "hash": "d49124914db75b52599e25aeaa3d86a4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/app/dashboard/page.tsx": {
+    "mtime": 1778223975.0829415,
+    "hash": "e83a8e5466538ffc83ca9ee846aa0a03"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/main.py": {
+    "mtime": 1778223975.082098,
+    "hash": "ae79d967aee289a0786660a61c008a8a"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/__init__.py": {
+    "mtime": 1778223975.081574,
+    "hash": "0ce9621e51bf49b7314a442c9dd48b99"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/main.py": {
+    "mtime": 1778223975.0818412,
+    "hash": "3e101d7eae37f3b2d081501565332eb4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/utils/__init__.py": {
+    "mtime": 1778223975.082098,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/retrieval_service.py": {
+    "mtime": 1778223975.082098,
+    "hash": "76c994894eaf119390cb8e991ac44732"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/embedding_service_optimized.py": {
+    "mtime": 1778223975.082098,
+    "hash": "fad4b774ac1fbc1b10c6572bf9c4c743"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/__init__.py": {
+    "mtime": 1778223975.081934,
+    "hash": "9fdf40eba9f2ca39fc02f293807106dd"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/query_processing_service.py": {
+    "mtime": 1778223975.082098,
+    "hash": "0156f1c6d1b0d56f50e1a9069f411880"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/embedding_service.py": {
+    "mtime": 1778223975.082098,
+    "hash": "a9fe337cd16dd04ac088de4094ef1b2f"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/ingestion_pipeline.py": {
+    "mtime": 1778223975.082098,
+    "hash": "4843b666d359f541a2088568d18f7471"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/vector_db_service.py": {
+    "mtime": 1778223975.082098,
+    "hash": "ac65e2fa1f2fc2f8b101e432c3d18512"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/context_builder_service.py": {
+    "mtime": 1778223975.0819943,
+    "hash": "e8b520c3cdec470c4c0c432a85c95d6b"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/structure_aware_chunker.py": {
+    "mtime": 1778223975.082098,
+    "hash": "62344a6ebc2beb4fe7a65d88ca6a7bb8"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/llm_service.py": {
+    "mtime": 1778223975.082098,
+    "hash": "778ff0d7c19b50c41ce86b35b615d7c2"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/chat_service.py": {
+    "mtime": 1778223975.0819943,
+    "hash": "6fe78f76221b8981700b8f2d1b88c81f"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_processor.py": {
+    "mtime": 1778223975.082098,
+    "hash": "f6f38828eb70400bf5e9de0eed481317"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/text_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "3c87466c61a3059acbaf4876f6318eae"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/__init__.py": {
+    "mtime": 1778223975.0819943,
+    "hash": "7c12053426b2139224ddcb34aeb0981c"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/base.py": {
+    "mtime": 1778223975.082098,
+    "hash": "cad9144ebb75bb22640c2a7cde5d0de6"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/docx_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "ad46b5f103453290990ec8493d610ec4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/pdf_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "75d14457530ac8e56c54b8c912d97b40"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/loader_factory.py": {
+    "mtime": 1778223975.082098,
+    "hash": "783b5613e2151907d3351c9a11416989"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/csv_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "29029699d63c7551fb2f7276888aec99"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/html_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "8d7fdc580d5fe3053d384be978e17949"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/json_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "20557e4e2d4540514bd8322b53bfc347"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/langchain_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "56162861b0a81de4955f4eca456eeb81"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/services/document_loaders/markdown_loader.py": {
+    "mtime": 1778223975.082098,
+    "hash": "8aea3b28d3bb02bd2b9388bcf8daca3d"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/schemas/__init__.py": {
+    "mtime": 1778223975.0818825,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/schemas/chat.py": {
+    "mtime": 1778223975.081934,
+    "hash": "af5288102e7ffefff75c8c3116a7a0e3"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/schemas/document.py": {
+    "mtime": 1778223975.081934,
+    "hash": "a0b07736b4a0e63b7e2d5691e9f9dae3"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/__init__.py": {
+    "mtime": 1778223975.0816112,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/__init__.py": {
+    "mtime": 1778223975.0816228,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/router.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "c29052ffa5c14539ec276e7cb35f1f7b"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/dashboard.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "ad459bb894540daf00fb3edc3a8ab441"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/__init__.py": {
+    "mtime": 1778223975.081636,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/chat.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "d9e7af844023f09206a2f5a37dffd53e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/settings.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "0e929a9e4882e78baded55fae63de3ae"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/health.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "01c015af5a6e06adbcb628b734f4bab4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/api/v1/endpoints/documents.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "ffce4a311e09df4221b03e3939bc8f82"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/core/__init__.py": {
+    "mtime": 1778223975.0816448,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/core/logging.py": {
+    "mtime": 1778223975.0817857,
+    "hash": "36d4b6f9a83531e6df5323f065a66ab9"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/core/exceptions.py": {
+    "mtime": 1778223975.0817857,
+    "hash": "37c8bea5be9b4da4732ed1c226b349b4"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/core/config.py": {
+    "mtime": 1778223975.0817857,
+    "hash": "f1e7dc9071ffd15357723135e83c76af"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/models/__init__.py": {
+    "mtime": 1778223975.0818412,
+    "hash": "bbc11fcc49365bd333d62868b77f02ac"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/models/setting.py": {
+    "mtime": 1778223975.0818825,
+    "hash": "c9dd340472d6a7101330596e27031578"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/models/activity.py": {
+    "mtime": 1778223975.0818825,
+    "hash": "220b0a7e362c2f907c127ca271c1fab8"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/models/document.py": {
+    "mtime": 1778223975.0818825,
+    "hash": "1e88e09bed2c2026b7f74f11b5884646"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/db/database.py": {
+    "mtime": 1778223975.0818412,
+    "hash": "9e5fe98117f9435aab6beba31d69435c"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/app/db/__init__.py": {
+    "mtime": 1778223975.0817857,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/tests/__init__.py": {
+    "mtime": 1778223975.082098,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/SETUP_LINUX.md": {
+    "mtime": 1778223975.0806248,
+    "hash": "387c873de65fc9c41be46cab215d6de7"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/details.md": {
+    "mtime": 1778223975.082098,
+    "hash": "dde3eafcd60c2c3d40a4826ab0ec941e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/RAG documentation.md": {
+    "mtime": 1778223975.0796247,
+    "hash": "52c6a01b06cc09c3ce8b69c47a4a5789"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/CURSOR.md": {
+    "mtime": 1778223975.079018,
+    "hash": "27c054ea4f62aa7427c170a82e62e353"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/SKILL.md": {
+    "mtime": 1778223975.0806248,
+    "hash": "568fe33228692e85543530ce376f695f"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/progress.md": {
+    "mtime": 1778223975.0855699,
+    "hash": "4fbe930f97e4fc19ab120ff10802e420"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/GEMINI.md": {
+    "mtime": 1778225677.1126225,
+    "hash": "da79aa9343cd2b362206f03762160abc"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/README.md": {
+    "mtime": 1778223975.0827913,
+    "hash": "f15aaa42d5d299d091b1171097ea56ad"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/AGENTS.md": {
+    "mtime": 1778223975.0827913,
+    "hash": "9e09241799026ac05be315a2f0b50055"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/CLAUDE.md": {
+    "mtime": 1778223975.0827913,
+    "hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/README.md": {
+    "mtime": 1778223975.081574,
+    "hash": "cd72a325be2e0288eacb0b2bd59487f5"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/backend/requirements.txt": {
+    "mtime": 1778223975.082098,
+    "hash": "8256559b79e6d81b77b83455a542d3f1"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/RAG documentation.pdf": {
+    "mtime": 1778223975.0806248,
+    "hash": "2b5ce7dfea712a3431d5231468269ea0"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/Final Architecture of hybrid RAG.pdf": {
+    "mtime": 1778223975.079018,
+    "hash": "8a7198c719724f5b2532ba88aa4fb098"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/image/README/1777623094215.png": {
+    "mtime": 1778223975.0836248,
+    "hash": "98318ca2a836d12a1118f3594c674483"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/image/README/1777623123115.png": {
+    "mtime": 1778223975.084625,
+    "hash": "98318ca2a836d12a1118f3594c674483"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/image/README/1777623066267.png": {
+    "mtime": 1778223975.0836248,
+    "hash": "d5ec21e224d749f44a51a9bbada12a78"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/public/vercel.svg": {
+    "mtime": 1778223975.0855699,
+    "hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/public/next.svg": {
+    "mtime": 1778223975.0855699,
+    "hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/public/globe.svg": {
+    "mtime": 1778223975.0855699,
+    "hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/public/window.svg": {
+    "mtime": 1778223975.0855699,
+    "hash": "a2760511c65806022ad20adf74370ff3"
+  },
+  "/home/jai/new-nlp/g1_nlp_dashboard/frontend/g1-dashboard/public/file.svg": {
+    "mtime": 1778223975.0850337,
+    "hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  }
+}
